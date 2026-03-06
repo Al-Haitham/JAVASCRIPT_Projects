@@ -10,12 +10,20 @@
 <body>
     <div class="container shadow bg-light rounded">
         <h4>Liste des élèves</h4>
-        <table class="col-12 p-3">
-            <tr class="bg-dark text-white rounded"><th class="p-2">Nom</th><th class="p-2">Note</th></tr>
-            <tr><td class="p-2">Ali</td><td class="p-2">15</td></tr>
-            <tr><td class="p-2">Sara</td><td class="p-2">8</td></tr>
-            <tr><td class="p-2">Karim</td><td class="p-2">18</td></tr>
+        <table class=" col-12 p-3">
+            <thead class="bg-dark text-white rounded"><th class="p-2">Nom</th><th class="p-2">Note</th></thead>
+            <tbody>
+                <tr><td class="p-2">Ali</td><td class="p-2">15</td></tr>
+                <tr><td class="p-2">Sara</td><td class="p-2">8</td></tr>
+                <tr><td class="p-2">Karim</td><td class="p-2">18</td></tr>
+            </tbody>
         </table>
+        <button type="check" onclick="check()" id="verBtn">Verifier</button>
     </div>
+    <script type="text/javascript">
+        document.querySelector('#verBtn').addEventListener('click',function(e){
+            
+        })
+    </script>
 </body>
 </html>
