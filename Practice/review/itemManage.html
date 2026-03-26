@@ -38,27 +38,22 @@
         document.querySelector('.addBtn').addEventListener('click', addRow);
 
         function addRow() {
-            let nom = document.querySelector('#nom').value;
-            let prix = document.querySelector('#prix').value;
+            let nom=document.querySelector('#nom').value;
+            let prix=document.querySelector('#prix').value;
+            if (nom.trim()==="") return;
+            let newRow=document.createElement('tr');
 
-            if (nom.trim() === "") return;
-
-            let newRow = document.createElement('tr');
-
-            newRow.innerHTML = `
+            newRow.innerHTML=`
                 <td>${nom}</td>
                 <td>${prix}</td>
                 <td>
                     <button class="btn btn-sm btn-warning" onclick="editRow(this)">Edit</button>
                     <button class="btn btn-sm btn-danger" onclick="deleteRow(this)">Delete</button>
-                </td>
-            `;
+                </td>`;
 
             document.querySelector('.myTable tbody').appendChild(newRow);
-
-            // clear inputs
-            document.querySelector('#nom').value = "";
-            document.querySelector('#prix').value = "";
+            document.querySelector('#nom').value="";
+            document.querySelector('#prix').value="";
         }
 
         function deleteRow(button) {
@@ -66,13 +61,11 @@
         }
 
         function editRow(button) {
-            let row = button.closest('tr');
-            let name = row.children[0].innerText;
-            let price = row.children[1].innerText;
-
-            document.querySelector('#nom').value = name;
-            document.querySelector('#prix').value = price;
-
+            let row=button.closest('tr');
+            let name=row.children[0].innerText;
+            let price=row.children[1].innerText;
+            document.querySelector('#nom').value=name;
+            document.querySelector('#prix').value=price;
             row.remove();
         }
     </script>
