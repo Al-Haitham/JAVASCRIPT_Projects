@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <input type="text" onchange="addTask(this)">
+    </div>
+    <ul id="tasks"></ul>
+    <script type="text/javascript">
+        function toggleState(){
+        
+        };
+        function addTask(inpt){
+            let newItem=`<li onclick=${toggleState}>${inpt.value}</li>`
+            document.querySelector("#tasks").insertAdjacentHTML('beforeend')
+        }
+    </script>
+</body>
+</html>

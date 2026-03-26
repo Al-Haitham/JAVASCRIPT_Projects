@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="rounded shadow m-3 p-3 col-8">
+        <h3>Gestion des produits</h3>
+        <div class="row gap-2">
+            <div class="col">
+                <input class="form-control" type="text" id="nom" placeholder="product name ..">
+            </div>
+            <div class="col">
+                <input class="form-control" type="number" id="prix" placeholder="price ..">
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-success addBtn">Add</button>
+            </div>
+        </div>
+
+        <table class="table table-hover my-3 mx-auto myTable">
+            <thead>
+                <tr>
+                    <th>produit</th>
+                    <th>prix</th>
+                    <th>action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        document.querySelector('.addBtn').addEventListener('click', addRow);
+
+        function addRow() {
+            let nom = document.querySelector('#nom').value;
+            let prix = document.querySelector('#prix').value;
+
+            if (nom.trim() === "") return;
+
+            let newRow = document.createElement('tr');
+
+            newRow.innerHTML = `
+                <td>${nom}</td>
+                <td>${prix}</td>
+                <td>
+                    <button class="btn btn-sm btn-warning" onclick="editRow(this)">Edit</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteRow(this)">Delete</button>
+                </td>
+            `;
+
+            document.querySelector('.myTable tbody').appendChild(newRow);
+
+            // clear inputs
+            document.querySelector('#nom').value = "";
+            document.querySelector('#prix').value = "";
+        }
+
+        function deleteRow(button) {
+            button.closest('tr').remove();
+        }
+
+        function editRow(button) {
+            let row = button.closest('tr');
+            let name = row.children[0].innerText;
+            let price = row.children[1].innerText;
+
+            document.querySelector('#nom').value = name;
+            document.querySelector('#prix').value = price;
+
+            row.remove();
+        }
+    </script>
+</body>
+</html>
