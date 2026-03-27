@@ -59,7 +59,21 @@
             document.querySelector("#title").value=title;
             document.querySelector("#price").value=price;
             document.querySelector("#addBtn").textContent="update";
-            
+        }
+
+        function addOrUpdate(){
+            let title=document.querySelector("#title").value;
+            let price=document.querySelector("#price").value;
+
+            if(editingRow){
+                editingRow.children[0].innerText=titel;
+                editingRow.children[1].innerText=price;
+                editingRow=null;
+                document.querySelector("#addBtn").textContent="Add";
+            }
+            else {
+                
+            }
         }
     </script>
 </body>
