@@ -1,0 +1,39 @@
+{
+  "moroccan_meals": [
+    {
+      "id": 1,
+      "image": "tagine.jpg",
+      "name": "Chicken Tagine",
+      "ingredients": ["chicken","onions","olives","preserved lemon","cumin","saffron"],
+      "description": "A slow-cooked savory stew with tender chicken, olives, and preserved lemon."
+    },
+    {
+      "id": 2,
+      "image": "couscous.jpg",
+      "name": "Couscous with Seven Vegetables",
+      "ingredients": ["couscous","carrots","chickpeas","meat"],
+      "description": "Traditional Friday dish with fluffy couscous topped with vegetables and tender meat."
+    },
+    {
+      "id": 3,
+      "image": "harira.jpg",
+      "name": "Harira",
+      "ingredients": ["tomatoes","lentils","chickpeas","meat","ginger"],
+      "description": "A hearty tomato-based soup, popular during Ramadan to break the fast."
+    },
+    {
+      "id": 4,
+      "image": "bastilla.jpg",
+      "name": "Bastilla",
+      "ingredients": ["chicken","almonds","eggs","cinnamon","sugar"],
+      "description": "A crispy pastry filled with spiced meat and almonds, dusted with powdered sugar."
+    },
+    {
+      "id": 5,
+      "image": "mechoui.jpg",
+      "name": "Mechoui",
+      "ingredients": ["meat", "butter", "cumin", "salt", "garlic", "paprika"],
+      "description": "Whole slow-roasted meat seasoned with spices, traditionally cooked in a pit."
+    }
+  ]
+}
