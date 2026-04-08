@@ -15,9 +15,9 @@
             <label class="form-label text-success">Carte mere</label>
             <select class="form-select" id="carte">
                 <option disabled selected>Choisir une Carte mere</option>
-                <option value=700>Asus</option>
-                <option value=600>Via</option>
-                <option value=500>Sis</option>
+                <option value="asus">Asus</option>
+                <option value="via">Via</option>
+                <option value="sis">Sis</option>
             </select>
         </div>
 
@@ -103,7 +103,9 @@
             let scanner=document.querySelector('#scanner').checked;
             let prix=0;
             
-            prix=prix+parseInt(carte);
+            if (carte==='asus') prix=prix+700;
+            if (carte==='via') prix=prix+600;
+            if (carte==='sis') prix=prix+500;
             
             if (taille==='15' && type==='plat') {prix=prix+1500;}
             else if (taille==='17' && type==='plat') {prix=prix+2000;}
