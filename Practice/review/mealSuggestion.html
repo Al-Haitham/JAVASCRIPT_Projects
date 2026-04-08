@@ -92,7 +92,7 @@
         const cardsContainer = document.getElementById('cardsContainer');
         cardsContainer.innerHTML = '';
 
-        if (selected.length === 0) {
+        if (selected.length===0) {
             cardsContainer.innerHTML = '<div class="col-12 text-center text-muted py-5"><p>Add ingredients to see matching meals</p></div>';
             return;
         }
@@ -103,7 +103,7 @@
             )
         );
 
-        if (matchingMeals.length === 0) {
+        if (matchingMeals.length===0) {
             cardsContainer.innerHTML = '<div class="col-12 text-center text-muted py-5"><p>No matching meals found.</p></div>';
             return;
         }
@@ -130,7 +130,7 @@
         const ul = document.querySelector('.selection');
         const items = ul.querySelectorAll('li:not(.text-muted)');
         
-        if (items.length === 0) {
+        if (items.length===0) {
             ul.innerHTML = '<li class="list-group-item text-muted text-center py-5">No ingredients added yet</li>';
         }
         }
@@ -140,7 +140,7 @@
         const input = document.getElementById('alim');
         const value = input.value.trim();
 
-        if (value === '') return;
+        if (value==='') return;
 
         const ul = document.querySelector('.selection');
         
@@ -163,7 +163,7 @@
 
         // Allow pressing Enter to add
         document.getElementById('alim').addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') document.getElementById('btnAdd').click();
+        if (e.key==='Enter') document.getElementById('btnAdd').click();
         });
 
         // Delete last ingredient from list
