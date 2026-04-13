@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="form">
+        <div class="container">
+            <input type="text" placeholder="Nom" id="nom">
+            <input type="text" placeholder="Age" id="age">
+            <button type="button" onclick="add()">Ajouter / Modifier</button>
+        </div>
+        <div class="container">
+            <input type="text" placeholder="Rechercher par nom .." id="search">
+            <button type="button" onclick="display()">Trier Age</button>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        let data = [
+            { nom: "Alice", age: 30 },
+            { nom: "Bob", age: 25 },
+            { nom: "Charlie", age: 35 }
+        ];
+
+        function add() {
+            const nom = document.getElementById('nom').value;
+            const age = parseInt(document.getElementById('age').value);
+            const index = data.findIndex(item => item.nom === nom);
+            if (index !== -1) {
+                data[index].age = age; // Modifier l'âge si le nom existe déjà
+            } else {
+                data.push({ nom, age }); // Ajouter un nouvel objet si le nom n'existe pas
+            }
+            console.log(data);
+        }
+
+        function display() {
+            const searchValue = document.getElementById('search').value.toLowerCase();
+            const filteredData = data.filter(item => item.nom.toLowerCase().includes(searchValue));
+            filteredData.sort((a, b) => a.age - b.age); // Trier par âge
+            filteredData.forEach
+        }
+    </script>
+</body>
+</html>

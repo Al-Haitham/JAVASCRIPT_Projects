@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h3>Players Management</h3>
+        <div class="row g-3">
+            <input class="form-control" type="text" id="nameR" placeholder="Real name ..">
+            <input class="form-control" type="text" id="nameG" placeholder="Game Username ..">
+
+            <select name="game" id="gameSelect">
+                <option value="" selected disabled>Choose the Player's Game</option>
+                <option value="CS:2">CS:2</option>
+                <option value="VALORANT">VALORANT</option>
+                <option value="OVERWATCH">OVERWATCH</option>
+                <option value="CALL OF DUTY WARZONE">CALL OF DUTY WARZONE</option>
+            </select>
+
+            <div class="level">
+                <label class="form-label" for="bronze">
+                <input type="radio" name="level" id="bronze" value="bronze" checked>Bronze</label>
+                <label class="form-label" for="silver">
+                <input type="radio" name="level" id="silver" value="silver">Silver</label>
+                <label class="form-label" for="gold">
+                <input type="radio" name="level" id="gold" value="gold">Gold</label>
+            </div>
+
+            <button type="button" class="btn btn-success " onclick="saveP()" id="btnSave">+ Save Player</button>
+        </div>
+
+
+         <!--Make sure to add event listeners (onkeyup,onchange) to search and filters
+         search: add onkeyup to the input tag
+         select: add onchange to the select tag
+         radio: add onchange to each input tag (adding it to the label tag works aswell if it contains the input tag)-->
+        <div class="searchFilter">
+            <input type="text" onkeyup="renderBoard()" id="search">
+            <select name="game" id="gameFilter" onchange="renderBoard()">
+                <option value="" selected>Display All games</option>
+                <option value="CS:2">CS:2</option>
+                <option value="VALORANT">VALORANT</option>
+                <option value="OVERWATCH">OVERWATCH</option>
+                <option value="CALL OF DUTY WARZONE">CALL OF DUTY WARZONE</option>
+            </select>
+            <div class="level">
+                <label class="form-label" for="bronze" >
+                <input type="checkbox" name="Flevel" id="bronze" value="bronze" onchange="renderBoard()">Bronze</label>
+                <label class="form-label" for="silver" >
+                <input type="checkbox" name="Flevel" id="silver" value="silver" onchange="renderBoard()">Silver</label>
+                <label class="form-label" for="gold" >
+                <input type="checkbox" name="Flevel" id="gold" value="gold" onchange="renderBoard()">Gold</label>
+                
+            </div>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Game</th>
+                    <th>Level</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="playerBoard">
+
+            </tbody>
+        </table>
+    </div> 
+
+
+
+    <script type="text/javascript">
+        
+        //get data from local storage on page load and display it
+        document.addEventListener("DOMContentLoaded",()=>{
+            let saved=localStorage.getItem("players");
+            if (saved){
+                players=JSON.parse(saved);
+                renderBoard();
+            }
+        });
+        
+        const saveToStorage=()=>{
+            localStorage.setItem("players",JSON.stringify(players));
+        };
+
+        //--initialization main objects array and the edit index
+        let players=[]
+        let editIndex=null;
+
+        //--Add function: initialize main attributs + alert for empty inputs
+        // + (add_mode> editIndex==null>array.push({attrs}), edit_mode> editIndex!=null>array[editIndex]={attrs}>editIndex=null)
+        // + clearform() + display()
+        const saveP=()=>{
+            let realName=$("#nameR").val();
+            let gameName=$("#nameG").val();
+            let game=$("#gameSelect").val();
+            let level=$("[name=level]:checked").val();
+
+            if(!realName || !gameName || !game ){
+                alert("please fill out required fields!");
+                return;
+            }
+
+            if(editIndex==null){
+                players.push({
+                    id:Date.now(),
+                    realName,
+                    gameName,
+                    game,
+                    level
+                });
+            }else{
+                players[editIndex]={
+                    id:Date.now(),
+                    realName,
+                    gameName,
+                    game,
+                    level
+                };
+                editIndex=null;
+            }
+            clearForm();
+            saveToStorage();
+            renderBoard();
+        }
+
+        //--display() function: initialize search and filters values and objectsTable + clear objectTable
+        //+ create a filtredTable with the main array > if search>filtredTable=mainArray.filter(...) + if filter>filtredTable=filtredTable.filter(...)
+        //+ loop over the filtredTable and append rows to the objectTable 
+        const renderBoard=()=>{
+            let search=$("#search").val().trim().toLowerCase();
+            let gmFilter=$("#gameFilter").val();
+            let lvlFilter=$("[name=Flevel]:checked").map((i,e)=>e.value).get().join(","); //get all checked levels and join them in a string to use it in the filter function
+            let playerBoard=$("#playerBoard");
+            playerBoard.html("");
+
+            let filteredBoard=players;
+            if (search){
+                filteredBoard=filteredBoard.filter(p=>
+                    p.realName.toLowerCase().includes(search) ||
+                    p.gameName.toLowerCase().includes(search)
+                );
+            }
+            if (gmFilter){
+                filteredBoard=filteredBoard.filter(p=>p.game===gmFilter);
+            }
+            if (lvlFilter){
+                filteredBoard=filteredBoard.filter(p=>lvlFilter.includes(p.level));
+            }
+
+            filteredBoard.forEach((p,index)=>{
+                playerBoard.append(`
+                    <tr>
+                        <td>${index}</td>
+                        <td>${p.realName}</td>
+                        <td>${p.gameName}</td>
+                        <td>${p.game}</td>
+                        <td>${p.level}</td>
+                        <td>
+                            <button class="btn btn-sm btn-success" onclick="edit(${index})">Edit</button>
+                            <button class="btn btn-sm btn-danger" onclick="del(${index})">Delete</button>
+                        </td>
+                    </tr>
+                `)
+            })
+        }
+
+        //--delete function: confirm alert > if true> array.splice(pos,1) + display()
+        const del=(index)=>{
+            if (confirm("Are you sure you want to delete this player?")){
+                players.splice(index,1);
+                saveToStorage();
+                renderBoard();
+            }
+        }
+         //edit function: set value of inputs to object[index] data + editIndex=pos to know that we are in edit mode 
+        const edit=(index)=>{
+            let p=players[index];
+            $("#nameR").val(p.realName);
+            $("#nameG").val(p.gameName);
+            $("#gameSelect").val(p.game);
+            $("[name=level]").prop("checked",false);
+            $(`[name=level][value='${players[index].level}']`).prop("checked",true);
+            editIndex=index;
+        }
+        
+        //clearForm function: set value of inputs to empty or default values
+        const clearForm=()=>{
+            $("#nameR").val("");
+            $("#nameG").val("");
+            $("#gameSelect").val("");
+            $("#bronze").prop("checked",true)
+            saveToStorage();
+        }
+    </script>
+</body>
+</html>
