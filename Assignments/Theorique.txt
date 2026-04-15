@@ -1,0 +1,29 @@
+1-Quelle est la principale différence entre `var` et `let`?
+    a)`var` a une portée globale, `let` a une portée de bloc.
+
+2-Comment accède-t-on à l'élément d'un tableau en JavaScript?
+    b)`array[index];`
+
+3-Quelle méthode est utilisée pour créer un nouveau tableau en appliquant une fonction à chaque élément d'un tableau d'origine?
+    c)`map`
+
+4-Que fait la méthode `setTimeout()` dans l'objet Window?
+    c)Elle exécute une fonction une seule fois après un certain délai.
+
+5-Quel sera le résultat du code suivant?
+
+const para=document.createElement("p");
+para.textContent="Hello, World!";
+document.body.appendChild(para);
+
+    b)Crée et ajoute un paragraphe avec le texte "Hello, World!" dans le corps du document.
+
+6-On suppose qu'une date au format JJ-MM-AAAA doit contenir uniquement des chiffres et des tirets. L'expression suivante est-elle valide ?
+exp=new RegExp("^\d{2}-\d{2}-\d{4}$");
+    b)Non
+
+7-Comment sélectionner un élément avec un attribut spécifique en jQuery ?
+    a)$("[attribute='value']")
+
+8-Quelle méthode est généralement utilisée pour traiter les réponses AJAX en cas de succès ?
+    d)onsuccess
