@@ -5,69 +5,97 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>pratique</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
-<body class="container mt-4">
-    <h2 class="mb-4">Soumission de candidatur</h2>
-    
-    <form id="formCand" class="mb-4">
-        <div class="mb-3">
-            <label for="nomCompl" class="form-label">Nom Complet :</label>
-            <input type="text" class="form-control" id="nomCompl" required>
-        </div>
-        <div class="mb-3">
-            <label for="ville" class="form-label">Ville :</label>
-            <input type="text" class="form-control" id="ville" required>
-        </div>
-        <div class="mb-3">
-            <label for="comptc" class="form-label">Compétence :</label>
-            <input type="text" class="form-control" id="comptc" required>
-        </div>
-        <div class="mb-3">
-            <label for="dispo" class="form-label">Disponibilité :</label>
-            <input type="text" class="form-control" id="dispo" required>
-        </div>
-        <div class="mb-3">
-            <label for="typeM" class="form-label">Type de mission souhaitée :</label>
-            <input type="text" class="form-control" id="typeM" required>
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email :</label>
-            <input type="email" class="form-control" id="email" required>
-        </div>
-        <div class="mb-3">
-            <label for="mdp" class="form-label">Mot de passe :</label>
-            <input type="password" class="form-control" id="mdp" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Soumettre</button>
-    </form>
+<body>
+    <div class="container mt-5 col-6">
+        <h2 class="text-center mx-3">Formulaire de Candidature</h2>
+        <form id="formCand">
+            <div class="mb-3">
+                <label for="nomCompl" class="form-label">Nom Complet</label>
+                <input type="text" class="form-control" id="nomCompl" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="ville" class="form-label">Ville</label>
+                <select class="form-select" id="ville" required>
+                    <option value="">Sélectionner une ville...</option>
+                    <option value="Casablanca">Casablanca</option>
+                    <option value="Marrakech">Marrakech</option>
+                    <option value="Rabat">Rabat</option>
+                    <option value="Agadir">Agadir</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="comptc" class="form-label">Compétence</label>
+                <select class="form-select" id="comptc" required>
+                    <option value="">Sélectionner une compétence...</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="Python">Python</option>
+                    <option value="Java">Java</option>
+                    <option value="HTML/CSS">HTML/CSS</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="dispo" class="form-label">Disponibilité</label>
+                <select class="form-select" id="dispo" required>
+                    <option value="">Sélectionner une disponibilité...</option>
+                    <option value="Immédiate">Immédiate</option>
+                    <option value="2 semaines">2 semaines</option>
+                    <option value="1 mois">1 mois</option>
+                    <option value="3 mois">3 mois</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="typeM" class="form-label">Type de Mission</label>
+                <input type="text" class="form-control" id="typeM" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="mdp" class="form-label">Mot de passe</label>
+                <input type="password" class="form-control" id="mdp" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Ajouter Candidat</button>
+        </form>
+    </div>
 
-    <h3>Tableau des Candidatures</h3>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nom Complet</th>
-                <th>Ville</th>
-                <th>Competence</th>
-                <th>Disponibilite</th>
-                <th>Type de mission</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody id="tabCand">
-        </tbody>
-    </table>
+    <div class="container mt-5">
+        <h2>Liste des Candidats</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nom Complet</th>
+                    <th>Ville</th>
+                    <th>Compétence</th>
+                    <th>Disponibilité</th>
+                    <th>Type de Mission</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="tabCand">
+            </tbody>
+        </table>
+    </div>
 
-    <script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
         let candidates=[];
 
-        document.getElementById('formCand').addEventListener('submit', function(e) {
+        $('#formCand').on('submit', function(e) {
             e.preventDefault();
             
             let nomCompl=$('#nomCompl').val().trim();
-            let ville=$('#ville').val().trim();
-            let comptc=$('#comptc').val().trim();
-            let dispo=$('#dispo').val().trim();
+            let ville=$('#ville').val();
+            let comptc=$('#comptc').val();
+            let dispo=$('#dispo').val();
             let typeM=$('#typeM').val().trim();
             let email=$('#email').val().trim();
             let mdp=$('#mdp').val();
@@ -82,14 +110,14 @@
                 return;
             }
             
-            const candidate={ nomCompl, ville, comptc, dispo, typeM, email, mdp };
+            const candidate={id:Date.now(), nomCompl, ville, comptc, dispo, typeM, email, mdp};
             
             candidates.push(candidate);
-            addCandidateToTable(candidate);
+            displayCands(candidate);
             this.reset();
         });
 
-        const addCandidateToTable=(candidate)=>{
+        const displayCands=(candidate)=>{
             const tableBody=$('#tabCand');
             const row=$('<tr></tr>');
             
