@@ -1,61 +1,255 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color:#f0f2f5;
+            font-family:Arial,sans-serif;
+        }
+        .main-container {
+            background-color:white;
+            padding:20px;
+            border:1px solid #ccc;
+            box-shadow:0 0 10px rgba(0,0,0,0.1);
+            margin-top:30px;
+        }
+        .form-section-title {
+            font-size:1.1rem;
+            color:#495057;
+            margin-bottom:15px;
+            font-weight:bold;
+            border-bottom:1px solid #eee;
+            padding-bottom:5px;
+        }
+        .match-select {
+            height:100px; /* Makes the box look like the image */
+            overflow-y:scroll;
+        }
+        .ticket-table {
+            width:100%;
+            border-collapse:collapse;
+            margin-top:10px;
+        }
+        .ticket-table th,.ticket-table td {
+            border:1px solid #000;
+            padding:8px;
+            text-align:center;
+        }
+        .ticket-table th {
+            background-color:#f8f9fa;
+            font-weight:bold;
+        }
+        /* Mimic the specific visual grouping from the image */
+        .custom-card {
+            border:1px solid #dee2e6;
+            border-radius:5px;
+            padding:15px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <form action="" class="d-flex flex-row">
-            <div class="card col-6">
-                <fieldset>
-                    <legend>Informations du Supporter: </legend>
-                    <label for="pays">Pays d'origine:<br>
-                        <select name="" class="form-select" id="pays">
-                            <option value="" selected disabled>--Choisir une pays--</option>
-                            <option value="maroc">Maroc</option>
-                            <option value="france">France</option>
-                            <option value="espagne">Espagne</option>
-                            <option value="italie">Italie</option>
-                        </select>
-                    </label><br>
-                    <label for="cin">CIN / Passport :<br>
-                        <input type="text" class="form-control"  id="cin">
-                    </label><br>
-                    <label for="nom">Nom :<br>
-                        <input type="text" class="form-control" id="nom">
-                    </label><br>
-                    <label for="prenom">Prenom :<br>
-                        <input type="text" class="form-control" id="prenom">
-                    </label>
 
-                </fieldset>
+<div class="container">
+    <div class="main-container">
+        <h4 class="mb-4">Formulaire Vente de Ticket</h4>
+        
+        <div class="row">
+            <!-- Left Column:Supporter Info -->
+            <div class="col-md-6 mb-3">
+                <div class="custom-card h-100">
+                    <div class="form-section-title">Informations du Supporter</div>
+                    
+                    <div class="mb-3">
+                        <label for="pays" class="form-label fw-bold">Pays d'origine :</label>
+                        <select class="form-select" id="pays">
+                            <option value="Maroc">Maroc</option>
+                            <option value="Algerie">Algerie</option>
+                            <option value="Senegal">Senegal</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="cin" class="form-label fw-bold">CIN / Passeport :</label>
+                        <input type="text" class="form-control" id="cin" placeholder="CD12345">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="nom" class="form-label fw-bold">Nom :</label>
+                        <input type="text" class="form-control" id="nom" placeholder="FILALI">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="prenom" class="form-label fw-bold">Prenom :</label>
+                        <input type="text" class="form-control" id="prenom" placeholder="ALI">
+                    </div>
+                </div>
             </div>
 
-            <div class="col-6">
-                <fiedset>
-                    <legend>Match et Categorie: </legend>
-                        <select name="match" id="match" multiple>
-                            
-                        </select>
-                        <label for="">
-                            Categories du Tickets
-                            <label for="">
-                                Categorie 1
-                                <input type="radio">
-                            </label>
-                            <label for="">
-                                Categorie 2
-                                <input type="radio">
-                            </label>
-                        </label>
-                        <button type="button" class="btn btn-primary" onclick="">vendre ticket</button>
-                </fiedset>
-            </div>
-        </form>
+            <!-- Right Column:Match & Category -->
+            <div class="col-md-6 mb-3">
+                <div class="custom-card h-100">
+                    <div class="form-section-title">Match et Catégorie</div>
+                    
+                    <label for="matchSelect" class="form-label fw-bold">Sélection du match :</label>
+                    <select class="form-select match-select" id="matchSelect" multiple>
+                        <!-- Options will be filled by JS -->
+                    </select>
+                    
+                    <div class="mt-3">
+                        <label class="form-label fw-bold">Catégorie du ticket :</label><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="cat" id="cat1" value="1" checked>
+                            <label class="form-check-label" for="cat1">Catégorie 1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="cat" id="cat2" value="2">
+                            <label class="form-check-label" for="cat2">Catégorie 2</label>
+                        </div>
+                    </div>
 
+                    <button class="btn btn-primary mt-3" id="btnVendre">Vendre Ticket</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section:Ticket List -->
+        <div class="mt-5">
+            <h5 class="mb-3">Liste des Tickets</h5>
+            <table class="ticket-table">
+                <thead>
+                    <tr>
+                        <th>CIN/Passeport</th>
+                        <th>Nom et Prénom</th>
+                        <th>Pays</th>
+                        <th>Code Match</th>
+                        <th>Date Match</th>
+                        <th>Catégorie</th>
+                        <th>Prix</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Rows added here -->
+                </tbody>
+            </table>
+        </div>
     </div>
+</div>
+
+<script>
+    // 1) Initialisation des données
+    let matches=[];
+    let tickets=[];
+
+    // 2) Simulation de l'API (Données réelles basées sur l'image)
+    // Note:In a real scenario,you would fetch() from the URL provided in your assignment.
+    const mockApiData=[
+        { "codematch":"M01","equipe1":"Maroc","equipe2":"Mali","datematch":"2025-12-26T18:30","prix":200 },
+        { "codematch":"M02","equipe1":"Congo","equipe2":"Benin","datematch":"2025-12-23T21:00","prix":150 },
+        { "codematch":"M03","equipe1":"Tanzania","equipe2":"Nigéria","datematch":"2025-12-23T16:45","prix":100 },
+        { "codematch":"M04","equipe1":"Gabon","equipe2":"Cameroun","datematch":"2025-12-24T16:45","prix":120 }
+    ];
+
+    // Fonction pour charger les matchs
+    function chargerMatches() {
+        matches=mockApiData; // Remplit le tableau
+        remplirListeMatches(); // Affiche dans le select
+    }
+
+    // 3) Remplissage de la liste (Select)
+    function remplirListeMatches() {
+        const select=document.getElementById('matchSelect');
+        select.innerHTML=""; // Clear
+
+        matches.forEach(m=>{
+            // Format date to match image:"26/12/2025 18:30"
+            const d=new Date(m.datematch);
+            const dateStr=d.toLocaleDateString('fr-FR')+' '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+            
+            const opt=document.createElement('option');
+            opt.value=m.codematch;
+            opt.textContent=`${m.equipe1} vs ${m.equipe2} - ${dateStr}`;
+            opt.dataset.prix=m.prix; // Store price for later use
+            opt.dataset.matchName=`${m.equipe1} vs ${m.equipe2}`;
+            select.appendChild(opt);
+        });
+    }
+
+    // 4) Gestion du clic sur "Vendre Ticket"
+    document.getElementById('btnVendre').addEventListener('click',function() {
+        // Récupération valeurs
+        const cin=document.getElementById('cin').value.toUpperCase();
+        const nom=document.getElementById('nom').value.toUpperCase();
+        const prenom=document.getElementById('prenom').value.toUpperCase();
+        const pays=document.getElementById('pays').value.toUpperCase();
+        
+        const select=document.getElementById('matchSelect');
+        const selectedOption=select.options[select.selectedIndex];
+        
+        // Si rien n'est sélectionné dans la liste multiple
+        if (!selectedOption||selectedOption.text==="") {
+            alert("Veuillez sélectionner un match.");
+            return;
+        }
+
+        const codematch=selectedOption.value;
+        const dateMatchText=selectedOption.text.split('- '); // Extract date part
+        const prixBase=parseFloat(selectedOption.dataset.prix);
+        
+        const cat=document.querySelector('input[name="cat"]:checked').value;
+        let prixFinal=prixBase;
+        
+        // Logique prix (Optionnel,juste pour l'exemple)
+        if(cat=="2") prixFinal=prixBase * 0.8; // Exemple:Cat 2 est moins cher
+
+        // Vérification doublon (Question 4 de votre image)
+        const existe=tickets.some(t=>t.cin_pass===cin && t.codematch===codematch);
+        if (existe) {
+            alert("Ce supporter a déjà un ticket pour ce match !");
+            return;
+        }
+
+        // Création objet ticket
+        const ticket={
+            cin_pass:cin,
+            nom_prenom:`${nom} ${prenom}`,
+            pays:pays,
+            codematch:codematch,
+            date_match:dateMatchText,
+            categorie:cat,
+            prix:prixFinal
+        };
+
+        tickets.push(ticket);
+        ajouterLigneTableau(ticket);
+    });
+
+    // Fonction d'affichage
+    function ajouterLigneTableau(t) {
+        const tbody=document.getElementById('tableBody');
+        const row=document.createElement('tr');
+        
+        row.innerHTML=`
+            <td>${t.cin_pass}</td>
+            <td>${t.nom_prenom}</td>
+            <td>${t.pays}</td>
+            <td>${t.codematch}</td>
+            <td>${t.date_match}</td>
+            <td>${t.categorie}</td>
+            <td>${t.prix.toFixed(0)} MAD</td>
+        `;
+        
+        tbody.appendChild(row);
+    }
+
+    // Lancer le chargement au démarrage
+    window.onload=chargerMatches;
+
+</script>
+
 </body>
 </html>
