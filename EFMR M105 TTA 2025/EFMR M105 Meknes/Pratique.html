@@ -43,7 +43,7 @@
             background-color:#f8f9fa;
             font-weight:bold;
         }
-        /* Mimic the specific visual grouping from the image */
+        
         .custom-card {
             border:1px solid #dee2e6;
             border-radius:5px;
@@ -60,8 +60,8 @@
         <div class="row">
             <!-- Left Column:Supporter Info -->
             <div class="col-md-6 mb-3">
-                <div class="custom-card h-100">
-                    <div class="form-section-title">Informations du Supporter</div>
+                <fieldset class="custom-card h-100">
+                    <legend class="form-section-title">Informations du Supporter</legend>
                     
                     <div class="mb-3">
                         <label for="pays" class="form-label fw-bold">Pays d'origine :</label>
@@ -87,13 +87,13 @@
                         <label for="prenom" class="form-label fw-bold">Prenom :</label>
                         <input type="text" class="form-control" id="prenom" placeholder="ALI">
                     </div>
-                </div>
+                </fieldset>
             </div>
 
             <!-- Right Column:Match & Category -->
             <div class="col-md-6 mb-3">
-                <div class="custom-card h-100">
-                    <div class="form-section-title">Match et Catégorie</div>
+                <fieldset class="custom-card h-100">
+                    <legend class="form-section-title">Match et Catégorie</legend>
                     
                     <label for="matchSelect" class="form-label fw-bold">Sélection du match :</label>
                     <select class="form-select match-select" id="matchSelect" multiple>
@@ -113,7 +113,7 @@
                     </div>
 
                     <button class="btn btn-primary mt-3" id="btnVendre">Vendre Ticket</button>
-                </div>
+                </fieldset>
             </div>
         </div>
 
@@ -145,8 +145,7 @@
     let matches=[];
     let tickets=[];
 
-    // 2) Simulation de l'API (Données réelles basées sur l'image)
-    // Note:In a real scenario,you would fetch() from the URL provided in your assignment.
+
     const mockApiData=[
         { "codematch":"M01","equipe1":"Maroc","equipe2":"Mali","datematch":"2025-12-26T18:30","prix":200 },
         { "codematch":"M02","equipe1":"Congo","equipe2":"Benin","datematch":"2025-12-23T21:00","prix":150 },
@@ -154,7 +153,7 @@
         { "codematch":"M04","equipe1":"Gabon","equipe2":"Cameroun","datematch":"2025-12-24T16:45","prix":120 }
     ];
 
-    // Fonction pour charger les matchs
+    
     function chargerMatches() {
         matches=mockApiData; // Remplit le tableau
         remplirListeMatches(); // Affiche dans le select
