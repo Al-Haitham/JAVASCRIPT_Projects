@@ -79,6 +79,7 @@
 
 
     <script type="text/javascript">
+
         
         //get data from local storage on page load and display it
         document.addEventListener("DOMContentLoaded",()=>{
@@ -88,7 +89,6 @@
                 renderBoard();
             }
         });
-        
         const saveToStorage=()=>{
             localStorage.setItem("players",JSON.stringify(players));
         };
@@ -97,15 +97,17 @@
         let players=[]
         let editIndex=null;
 
+
         //--Add function: initialize main attributs + alert for empty inputs
-        // + (add_mode> editIndex==null>array.push({attrs}), edit_mode> editIndex!=null>array[editIndex]={attrs}>editIndex=null)
+        // + (add_mode> editIndex==null>array.push({attrs}) | edit_mode> editIndex!=null>array[editIndex]={attrs}>editIndex=null)
         // + clearform() + display()
         const saveP=()=>{
             let realName=$("#nameR").val();
             let gameName=$("#nameG").val();
             let game=$("#gameSelect").val();
             let level=$("[name=level]:checked").val();
-
+        
+            //check all required  fields
             if(!realName || !gameName || !game ){
                 alert("please fill out required fields!");
                 return;

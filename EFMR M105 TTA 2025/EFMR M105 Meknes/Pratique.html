@@ -162,20 +162,10 @@
     // 3) Remplissage de la liste (Select)
     function remplirListeMatches() {
         const select=document.getElementById('matchSelect');
-        select.innerHTML=""; // Clear
-
-        matches.forEach(m=>{
-            // Format date to match image:"26/12/2025 18:30"
-            const d=new Date(m.datematch);
-            const dateStr=d.toLocaleDateString('fr-FR')+' '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
-            
-            const opt=document.createElement('option');
-            opt.value=m.codematch;
-            opt.textContent=`${m.equipe1} vs ${m.equipe2} - ${dateStr}`;
-            opt.dataset.prix=m.prix; // Store price for later use
-            opt.dataset.matchName=`${m.equipe1} vs ${m.equipe2}`;
-            select.appendChild(opt);
-        });
+        select.innerHTML=mockApiData.map(m=>{
+            const select=$('#matchSelect');
+            return `<option value="${m.codematch}">${m.equipe1} vs ${m.equipe2} - ${m.datematch}</option>`
+        }).join('')
     }
 
     // 4) Gestion du clic sur "Vendre Ticket"

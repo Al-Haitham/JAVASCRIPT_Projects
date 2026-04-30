@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ProductctToCart</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-4">
+  <h2>Products & Cart</h2>
+
+  <div class="row mt-4">
+
+    <div class="col-md-6">
+      <h5>Products</h5>
+      <ul class="list-group mb-3" id="products-list">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span>PC - 8000 DH</span>
+          <input type="checkbox" value='{"name":"PC","price":8000}' class="form-check-input">
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span>Souris - 150 DH</span>
+          <input type="checkbox" value='{"name":"Souris","price":150}' class="form-check-input">
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span>Clavier - 300 DH</span>
+          <input type="checkbox" value='{"name":"Clavier","price":300}' class="form-check-input">
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span>Ecran - 2000 DH</span>
+          <input type="checkbox" value='{"name":"Ecran","price":2000}' class="form-check-input">
+        </li>
+      </ul>
+      <button class="btn btn-primary" onclick="addSelected()"> >> Add to Cart </button>
+    </div>
+
+
+    <div class="col-md-6">
+      <h5>Cart</h5>
+      <ul class="list-group mb-3" id="cart-list"></ul>
+      <div class="d-flex justify-content-between align-items-center">
+        <strong>Total : <span id="total">0</span> DH</strong>
+        <button class="btn btn-danger btn-sm" onclick="clearCart()">Clear All</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const cart=[];
+
+    function addSelected() {
+      const checkboxes=document.querySelectorAll('#products-list input[type="checkbox"]:checked');
+      checkboxes.forEach(checkbox=>{
+        const item=JSON.parse(checkbox.value);
+        const cartItem=cart.find(i=>i.name===item.name);
+
+        if (cartItem) {
+          cartItem.qty++;
+        } else {
+          cart.push({ ...item, qty: 1 });
+        }
+
+        render();
+        checkbox.checked=false;
+      });
+    }
+
+    function render() {
+      const cartList=document.querySelector('#cart-list');
+      cartList.innerHTML='';
+
+      cart.forEach(item=>{
+        const li=document.createElement('li');
+        li.className='list-group-item d-flex justify-content-between align-items-center';
+        li.innerHTML=`
+          ${item.name} | ${item.price} DH | QTÉ: ${item.qty}
+          <button class="btn btn-sm btn-danger" onclick="delet('${item.name}')">del</button>
+        `;
+        cartList.append(li);
+      });
+
+      updateTotal();
+    }
+
+    function delet(name) {
+      const index=cart.findIndex(item=>item.name===name);
+      if (index!==-1) {
+        const cartItem=cart[index];
+        if (cartItem.qty>1) {
+          cartItem.qty--;
+        } else {
+          cart.splice(index, 1);
+        }
+        render();
+      }
+    }
+
+    function updateTotal() {
+      const total=cart.reduce((T, item)=>T+(item.price*item.qty), 0);
+      document.querySelector('#total').textContent=total;
+    }
+
+    function clearCart() {
+      cart.length=0;
+      document.querySelector('#cart-list').innerHTML='';
+      updateTotal();
+    }
+  </script>
+</body>
+</html>   
