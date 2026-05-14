@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/JAVASCRIPT">
+        class Forme{
+            constructor(color){
+                if(new.target==Forme){
+                    throw new Error("la classe Forme est abstrait!");
+                }
+                this.color=color;
+                }
+                
+            CalculSurface(){
+                throw new Error("CalculSurface est un Method abstrait!")
+            }
+        }
+        class Carree extends Forme{
+            #cote
+            constructor(color,cote){
+                super(color);
+                this.#cote=cote;
+            }
+            CalculSurface(){
+                return Math.pow(this.#cote,2);
+            }
+            toString(){
+                return `color: ${this.color} - surface: ${this.CalculSurface()}`;
+            }
+        }
+        class Cercle extends Forme{
+            constructor(color,rayon){
+                super(color);
+                this.rayon=rayon;
+            }
+            CalculSurface(){
+                return (Math.PI*Math.pow(this.rayon,2)).toFixed(2)
+            }
+            toString(){
+                return `color: ${this.color} - surface: ${this.CalculSurface()}`;
+            }
+        }
+        class Triangle extends Forme{
+            constructor(color,base,hauteur){
+                super(color);
+                this.base=base;
+                this.hauteur=hauteur;
+            }
+            CalculSurface(){
+                return ((this.base*this.hauteur)/2).toFixed(2);
+            }
+            toString(){
+                return `color: ${this.color} - surface: ${this.CalculSurface()}`;
+            }
+        } 
+        //instanciation
+        let ca=new Carree("green",5); //Carre
+        console.log(ca.toString());
+        let ce=new Cercle("blue",3); //Cercle
+        console.log(ce.toString());
+        let tr=new Triangle("red",5,7); //Triangle
+        console.log(tr.toString());
+    </script>
+</body>
+</html>

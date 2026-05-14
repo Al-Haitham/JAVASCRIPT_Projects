@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/JAVASCRIPT">
+        class Ecole{
+            #notes;
+            #nom;
+            constructor(notes,nom){
+                this.#notes=notes;
+                this.#nom=nom;
+            }
+            AjouterNote(note){
+                if(note<0 || note>20){
+                    console.log('note invalide');
+                    return;
+                }
+                this.#notes.push(note)
+            }
+            CalculerMoy(){
+                if(this.#notes.length==0)return 0;
+                let somNote=this.#notes.reduce((accum,n)=>acc+=n,0)
+                return (somNote/this.#notes.length).toFixed(2);
+            }
+            AfficherInfo(){
+                console.log(`nom:${this.#nom} - Moyenne: ${this.CalculerMoy()}`);
+            }
+            toString(){
+                return `nom:${this.#nom} - Moyenne: ${this.CalculerMoy()}`;
+            }
+        }
+    </script>
+</body>
+</html>

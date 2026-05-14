@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/JAVASCRIPT">
+        class Livre{
+            constructor(titre,auteur){
+                this.titre=titre;
+                this.auteur=auteur;
+        
+            }
+        }
+        class Biblio{
+            constructor(){
+                this.tableLiv=[];
+            }
+            ajouterLivre(livre){
+                let exist=this.tableLiv.find(l=>l.titre==livre.titre);
+                if(exist) throw new Error('livre existe déja!');
+                this.tableLiv.push(livre);
+            }
+            supprimerLivre(titre){
+                let pos=this.tableLiv.findIndex(l=>l.titre==livre.titre);
+                if(pos==-1) throw new Error("livre n'existe pas");
+                this.tableLiv.splice(pos,1);
+            }
+            rechercherParAuteur(auteur){
+                return this.tableLiv.filter(livre=>livre.auteur==auteur);
+            }
+        }
+
+        //instanciation
+        let b=new Biblio();
+        b.ajouterLivre(new Livre("titre1","auteur1"));
+        b.ajouterLivre(new Livre("titre2","auteur2"));
+        b.ajouterLivre(new Livre("titre3","auteur1"));
+        console.table(b.tableLiv);
+        console.table(b.rechercherParAuteur("auteur1"));
+    </script>
+</body>
+</html>
