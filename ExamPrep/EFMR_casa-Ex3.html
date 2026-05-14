@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container d-flex justify-content-center">
+        <div class="card col-md-4 m-3">
+            <div class="card-header">
+                <h3 class="text-center">Formulaire d'inscription</h3>
+            </div>
+            <div class="card-body form d-flex flex-column align-items-center justify-content-center">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="form-label">Nom:</td>
+                            <td class="form-conrol"><input type="text" id="nom"></td>
+                        </tr>
+                        <tr>
+                            <td class="form-label">Prénom:</td>
+                            <td class="form-conrol"><input type="text" id="prenom"></td>
+                        </tr>
+                        <tr>
+                            <td class="form-label">Age:</td>
+                            <td class="form-conrol"><input type="Number" id="age"></td>
+                        </tr>
+                        <tr>
+                            <td class="form-label">Sexe:</td>
+                            <td class="form-conrol">
+                                <div><input type="radio" name="genre" id="h"><label for="h">Homme</label></div>
+                                <div><input type="radio" name="genre" id="f"><label for="f">Femme</label></div>
+                            </td>
+                        </tr>gap
+                        <tr>
+                            <td>Pays:</td>
+                            <td>
+                                <select class="form-select" name="pays" id="pays">
+                                    <option value="France">France</option>
+                                    <option value="Espagne">Espagne</option>
+                                    <option value="Belgique">Belgique</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Discipline:</td>
+                            <td class="row">
+                                <div class="col-6">
+                                    <div class="d-flex align-items-left"><input name="discip" class="form-check" type="checkbox" id="marathon"><label for="marathon">Marathon</label></div>
+                                    <div class="d-flex align-items-left"><input name="discip" class="form-check" type="checkbox" id="natation"><label for="natation">Natation</label></div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-left"><input name="discip" class="form-check" type="checkbox" id="sprint"><label for="sprint">Sprint</label></div>
+                                    <div class="d-flex align-items-left"><input name="discip" class="form-check" type="checkbox" id="saut"><label for="saut">Saut</label></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="button" onclick="save()" class="btn btn-success col-12 mt-5">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/JAVASCRIPT">
+        const ValiderForm=()=>{
+            let $nom=$("#nom").val().trim();
+            let $prenom=$("#prenom").val().trim();
+            let $age=$("#age").val();
+            let $sexe=$("input[name='sexe']:checked");
+            let $discips=$("input[name='discip']:checked")
+            let $pays=$("#pays").val();
+
+            let regN=/^[A-Za-z\s]+$/;
+            if (!$nom || !$prenom || !$age || !$pays){
+                alert("Tous les champs sont obligatoire!!");
+                return false;
+            }
+            if(!regN.test($nom) || !regN.test($prenom)){
+                alert("nom et prenom de forme invalide!");
+                return false;
+            }
+            if(!sexe){
+                alert("le choix de sexe est obligatoire!");
+                return false;
+            }
+            if(!discips){
+                alert("le choix de discipline est obligatoire!");
+                return false;
+            }
+
+            alert("formulaire est Valide!");
+            return true;
+        }
+    </script>
+</body>
+</html>

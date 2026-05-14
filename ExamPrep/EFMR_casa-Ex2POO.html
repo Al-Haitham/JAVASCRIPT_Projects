@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/JAVASCRIPT">
+        class Vehicule{
+            constructor(marque,modele,prix_loc){
+                this.marque=marque;
+                this.modele=modele;
+                this.prix_loc=prix_loc;
+            }
+            affichInfo(){
+                return `Marque: ${this.marque} - Modele: ${this.modele} - Prix de Location: ${this.prix_loc}`;
+            }
+        }
+        class Voiture extends Vehicule{
+            constructor (marque,modele,prix_loc,nb_portes){
+                super(marque,modele,prix_loc);
+                this.nb_portes=nb_portes;
+            }
+            affichInfo(){
+                return `${super.affichInfo()} - Nombre des Portes: ${this.nb_portes}`
+            }
+        }
+
+        //instanciatons
+        let v=new Voiture("marque1","modele1",350,2);
+        console.log(v.affichInfo())
+    </script>
+</body>
+</html>
