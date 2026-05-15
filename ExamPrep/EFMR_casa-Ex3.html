@@ -7,13 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="container d-flex justify-content-center">
-        <div class="card col-md-4 m-3">
+    <div class="container d-flex flex-column align-items-center justify-content-center">
+        <div class="card col-md-12 m-3">
             <div class="card-header">
                 <h3 class="text-center">Formulaire d'inscription</h3>
             </div>
-            <div class="card-body form d-flex flex-column align-items-center justify-content-center">
-                <table>
+            <form id="form" class="card-body d-flex flex-column align-items-center justify-content-center">
+                <table class="col-8">
                     <tbody>
                         <tr>
                             <td class="form-label">Nom:</td>
@@ -33,7 +33,7 @@
                                 <div><input type="radio" name="genre" id="h"><label for="h">Homme</label></div>
                                 <div><input type="radio" name="genre" id="f"><label for="f">Femme</label></div>
                             </td>
-                        </tr>gap
+                        </tr>
                         <tr>
                             <td>Pays:</td>
                             <td>
@@ -62,9 +62,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <button type="button" onclick="save()" class="btn btn-success col-12 mt-5">Enregistrer</button>
-            </div>
+                <button type="submit" class="btn btn-primary col-12 mt-5">Enregistrer</button>
+            </form>
         </div>
+
         <table>
             <thead>
                 <tr>
@@ -77,13 +78,15 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="Rtab">
                 
             </tbody>
         </table>
     </div>
 
     <script type="text/JAVASCRIPT">
+        let log=[];
+
         const ValiderForm=()=>{
             let $nom=$("#nom").val().trim();
             let $prenom=$("#prenom").val().trim();
@@ -112,11 +115,36 @@
 
             alert("formulaire est Valide!");
             return true;
-
-            const affichTab=()=>{
-                let $tbody=$("#tab")
-            }
         }
+
+        const affichTab=()=>{
+            let $tbody=$("#Rtab")
+            $tbody.html("")
+
+            log.forEach((person,i)=>{
+                $tbody.append(`
+                    <tr>
+                        <th>${person.$nom}</th>
+                        <th>${person.$prenom}</th>
+                        <th>${person.$age}</th>
+                        <th>${person.$sexe}</th>
+                        <th>${person.$discips}</th>
+                        <th>${person.$pays}</th>
+                        <th>
+                            <button type="btn btn-danger" onclick="del(${i})">Suprimer</button>
+                            <button type="btn btn-success   " onclick="ed(${i})">Editer</button>
+                        </th>
+                    </tr>
+                `)
+            })
+        }
+
+        $("#form").on("submit",(e)=>{
+            e.preventDefault();
+
+            
+        })
+        
     </script>
 </body>
 </html>

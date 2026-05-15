@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire d'inscription</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>Formulaire d'inscription</h2>
+
+    <form id="monForm" class="p-4 border rounded shadow-sm">
+        <input type="hidden" id="editIndex">
+
+        <div class="mb-3">
+            <label>Nom</label>
+            <input type="text" id="nom" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>Prénom</label>
+            <input type="text" id="prenom" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>Age</label>
+            <input type="number" id="age" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>Sexe</label><br>
+            <input type="radio" name="sexe" value="M"> M
+            <input type="radio" name="sexe" value="F"> F
+        </div>
+
+        <div class="mb-3">
+            <label>Pays</label>
+            <select id="pays" class="form-select">
+                <option value="">Choisir</option>
+                <option value="Maroc">Maroc</option>
+                <option value="France">France</option>
+                <option value="Autre">Autre</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label>Disciplines</label><br>
+            <input type="checkbox" name="discipline" value="Math"> Math
+            <input type="checkbox" name="discipline" value="Physique"> Physique
+            <input type="checkbox" name="discipline" value="Info"> Info
+        </div>
+
+        <button class="btn btn-primary">Envoyer</button>
+    </form>
+
+    <h2 class="mt-4">Liste des inscriptions</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Age</th>
+                <th>Sexe</th>
+                <th>Pays</th>
+                <th>Disciplines</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+let records = JSON.parse(localStorage.getItem("records")) || [];
+
+// validation
+const validateForm = () => {
+    const nom = $("#nom").val().trim();
+    const prenom = $("#prenom").val().trim();
+    const age = $("#age").val().trim();
+    const pays = $("#pays").val();
+    const sexe = $("input[name='sexe']:checked").val();
+    const disciplines = $("input[name='discipline']:checked");
+
+    const reg = /^[A-Za-z\s]+$/;
+
+    if (!nom || !prenom || !age || !pays) {
+        alert("Tous les champs sont obligatoires");
+        return false;
+    }
+
+    if (!reg.test(nom) || !reg.test(prenom)) {
+        alert("Nom et prénom invalides");
+        return false;
+    }
+
+    if (!sexe) {
+        alert("Choisir sexe");
+        return false;
+    }
+
+    if (disciplines.length === 0) {
+        alert("Choisir au moins une discipline");
+        return false;
+    }
+
+    return true;
+};
+
+// afficher tableau
+const afficherTable = () => {
+    let html = "";
+
+    records.forEach((item, i) => {
+        html += `
+        <tr>
+            <td>${item.nom}</td>
+            <td>${item.prenom}</td>
+            <td>${item.age}</td>
+            <td>${item.sexe}</td>
+            <td>${item.pays}</td>
+            <td>${item.disciplines.join(", ")}</td>
+            <td>
+                <button class="btn btn-warning btn-sm edit" data-id="${i}">Edit</button>
+                <button class="btn btn-danger btn-sm delete" data-id="${i}">Delete</button>
+            </td>
+        </tr>`;
+    });
+
+    $("#tableBody").html(html);
+};
+
+// sauvegarder localStorage
+const saveData = () => {
+    localStorage.setItem("records", JSON.stringify(records));
+};
+
+// submit
+$("#monForm").submit((e) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
+    const obj = {
+        nom: $("#nom").val().trim(),
+        prenom: $("#prenom").val().trim(),
+        age: $("#age").val().trim(),
+        sexe: $("input[name='sexe']:checked").val(),
+        pays: $("#pays").val(),
+        disciplines: $("input[name='discipline']:checked").map(function () {
+            return $(this).val();
+        }).get()
+    };
+
+    const index = $("#editIndex").val();
+
+    if (index === "") {
+        records.push(obj);
+    } else {
+        records[index] = obj;
+        $("#editIndex").val("");
+    }
+
+    saveData();
+    afficherTable();
+    $("#monForm")[0].reset();
+});
+
+// edit
+$(document).on("click", ".edit", (e) => {
+    const index = $(e.target).data("id");
+    const item = records[index];
+
+    $("#nom").val(item.nom);
+    $("#prenom").val(item.prenom);
+    $("#age").val(item.age);
+    $("#pays").val(item.pays);
+    $("#editIndex").val(index);
+
+    $("input[name='sexe'][value='" + item.sexe + "']").prop("checked", true);
+
+    $("input[name='discipline']").prop("checked", false);
+    item.disciplines.forEach(d => {
+        $("input[name='discipline'][value='" + d + "']").prop("checked", true);
+    });
+});
+
+// delete
+$(document).on("click", ".delete", (e) => {
+    const index = $(e.target).data("id");
+    records.splice(index, 1);
+    saveData();
+    afficherTable();
+});
+
+// escape
+$(document).keydown((e) => {
+    if (e.key === "Escape") window.close();
+});
+
+// export
+const exporter = () => JSON.stringify(records);
+
+// initial display
+afficherTable();
+</script>
+
+</body>
+</html>
