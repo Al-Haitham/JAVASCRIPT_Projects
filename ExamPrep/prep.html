@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h3>gestion des rendez-vous</h3>
+        <div class="form">
+            <label for="nom">Nom</label>
+            <input type="text" class="form-control" id="nom">
+
+            <label for="numTel">numTel</label>
+            <input type="tel" class="form-control" id="numTel">
+
+            <label for="daterdv">daterdv</label>
+            <input type="date" class="form-control" id="daterdv">
+            
+            <label for="specm">Specialite</label>
+            <select name="specm" id="specm">
+                <!--//-->
+            </select>
+            <button type="button" class="btn btn-success" onclick="save()" id="btnSave">ajouter</button>
+        </div>
+        <input type="text" onkeyup="display()">
+        <button class="btn btn-sm btn-danger" onclick="delSelect()">supprimer selection</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>selection</th>
+                    <th>nom</th>
+                    <th>telephone</th>
+                    <th>date</th>
+                    <th>specialité</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody id="rdvTab">
+                <!--//-->
+            </tbody>
+        </table>
+    </div>
+
+    <script type="text/JAVASCRIPT">
+        const
+    </script>
+</body>
+</html>

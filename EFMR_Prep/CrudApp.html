@@ -74,6 +74,91 @@
             <button class="btn btn-primary">Envoyer</button>
             </div>
         </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Age</th>
+                    <th>Filier</th>
+                    <th>Ecole</th>
+                    <th>Languages</th>
+                    <th>Competences</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                <!-- Data row -->
+            </tbody>
+        </table>
     </div>
+
+    <script type="text/JAVASCRIPT">
+        const saveLogs=()=>{
+            localStorage.setItem("logs",JSON.stringify(logs));
+        };
+
+        let logs=JSON.parse(localStorage.getItem("logs")) || [];
+
+        const validation=()=>{
+            const nom=$("#nom").val().trim();
+            const prenom=$("#prenom").val().trim();
+            const age=$("#age").val();
+            const filier=("#filier").val();
+            const ecole=$("input[name='ecole']:checked");
+            const languages=$("select[name='langs[]']").val();
+
+            const regN=/^[A-Za-z\s]+$/;
+            if (!nom || !prenom || !age || !filier || !ecole || !languages){
+                alert("tous les champs sont obligatoires!");
+                return false;
+            }
+            if (!reg.test(nom) || !reg.test(prenom)){
+                alert("nom et/ou prenom invalide");
+                return false;
+            }
+
+            return true;
+        }
+
+        const display=()=>{
+            logs.foreach((item,i)=>{
+                $("#tBody").append(`
+                <tr>
+                    <td>${item.nom}</td>
+                    <td>${item.prenom}</td>
+                    <td>${item.age}</td>
+                    <td>${item.filier}</td>
+                    <td>${item.ecole}</td>
+                    <td>${item.languages}</td>
+                    <td>
+                        <button class="btn btn-warning" onclick="edit(${i})">editer</button>
+                        <button class="btn btn-danger" onclick="del(${i})">supprimer</button>
+                    </td>
+                </tr>
+                `)
+            })
+        }
+
+        const del=(i)=>{
+            if (confirm("Supprimer cette inscription ?")){
+                logs.splice(i,1);
+                saveLogs();
+                display();
+            }
+        }
+
+        const edit=(i)=>{
+            let ins=logs[i];
+            $("#nom").val(ins.nom);
+            $("#prenom").val(ins.prenom);
+            $("#age").val(ins.age);
+            $("#filier").val(ins.filier);
+            $("[name=ecole]").prop("checked",false);
+            $(`[name=ecole][value='${ins.ecole}']`).prop("chekced",true)
+        }
+
+    </script>
 </body>
 </html>
