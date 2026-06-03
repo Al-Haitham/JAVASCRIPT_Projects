@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header"><h2>
+            Soccer teams management
+        </h2></div>
+        <div class="card-body">
+        <form action="" class="d-flex flex-column gap-4">
+            <input type="text" id="idT" disabled placeholder="Team ID" class="form-control">
+            <input type="text" id="nameT" placeholder="Team name" class="form-control">
+            <input type="text" id="namesTP" placeholder="Team members (separated by a hyphen '-')" class="form-control">
+            <input type="url" id="logoURL" placeholder="Logo Link" class="form-control">
+            <input type="date" id="dateC" placeholder="Creation date" class="form-control">
+            <button type="submit" class="btn btn-primary">Save Team</button>
+        </form>
+        </div>
+        <div class="card-footer"><div class="container">
+            <input type="text" id="search" onkeyup="display()" placeholder="Search..." class="form-control">
+            <div class="container col-12 cardsT d-flex flex-wrap gap-">
+                <!--//-->
+            </div>
+        </div></div>
+        
+        
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/JAVASCRIPT">
+
+        let editID=null;
+        const storage_key="logs";
+        let logs=JSON.parse(localStorage.getItem(storage_key)) || [];
+        const saveLS=()=>{
+            localStorage.setItem(storage_key,JSON.stringify(logs));
+        };
+        
+        
+        $(document).ready(function() {
+            function loadTeams() {
+                $.getJSON("teams.json", function(data) {
+                    data.forEach((t, idx) => {
+                        $(".cardsT").append(
+                            `
+                            <div class="card">
+                                <div class="card-header">
+                                    <img src="${t.logo_url}" width=200 alt="${t.name}">
+                                </div>
+                                <div class="card-body">
+                                    <h3><strong>${t.name}</strong></h3>
+                                    <h5>Founded: ${t.creation_date}</h5>
+                                    
+                                </div>
+                                <div class="card-footer">
+                                    <button onclick="del(${idx})">Del</button>
+                                </div>
+                            </div>
+                            `
+                        );
+                    });
+                })
+            }
+            loadTeams();
+        });
+
+        const saveT=()=>{
+            let name=$("#nameT").val().trim();
+            let players=$("#namesTP").val().split("-").map(name=>name.trim()).filter(name =>name!="");
+            let logo=$("#logoURL").val().trim();
+            let creation_date=$("#dateC").val();
+
+            if (!name || !players || !logo || !creation_date){
+                alert("Fill out all fields!");
+                return;
+            };
+
+            if (editID==null && !logs.some(team=>team.name===name)){
+                logs.push({
+                    id:(logs.length? Math.max(...logs.map(t=>t.id)):0)+1,
+                    name,
+                    players,
+                    logo,
+                    creation_date
+                })
+            }else{
+                logs[editID]={
+                    id:editID,
+                    name,
+                    players,
+                    logo,
+                    creation_date
+                };
+                editID=null;
+            }
+            clearForm();
+            display();
+        }
+
+        const display=()=>{
+            const container=$("#cards")
+            cards.append(`
+                            <div class="card">
+                                <div class="card-header">
+                                    <img src="${logo}" width=200 alt="${t.name}">
+                                </div>
+                                <div class="card-body">
+                                    <h3><strong>${name}</strong></h3>
+                                    <h5>Founded: ${creation_date}</h5>
+                                    
+                                </div>
+                                <div class="card-footer">
+                                    <button onclick="del(${idx})">Del</button>
+                                </div>
+                            </div>
+                            `)
+        }
+
+    </script>
+</body>
+</html>
