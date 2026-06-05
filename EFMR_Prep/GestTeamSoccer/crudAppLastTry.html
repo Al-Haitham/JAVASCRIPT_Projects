@@ -1,0 +1,24 @@
+<script type="text/JAVASCRIPT">
+
+
+
+//initial+localStorage Setup
+    let editID=null;
+    const storageKey="logs";
+    let logs=JSON.parse(localStorage.getItem(storageKey)) || [];
+    const saveToS=()=>{
+        localStorage.setItem(storageKey,JSON.stringify(logs));
+    };
+
+
+//fetch with jQuery
+    $.getJSON("filaName.json",function(data){
+        data.forEach((item,idx)=>{
+            $("#htmlContainer").append(`
+                //how each item will be displayed 
+                <div>${item.attrs}</div>
+                ...
+            `)
+        })
+    })
+</script>
